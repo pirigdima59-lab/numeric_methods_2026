@@ -52,6 +52,17 @@ print("\nТабуляція (відстань, висота):")
 print(" № | Distance (m) | Elevation (m)")
 for i in range(n):
     print(f"{i:2d} | {distances[i]:12.2f} | {elevations[i]:8.2f}")
+# Запис у текстовий файл
+with open("tabulation.txt", "w", encoding="utf-8") as f:
+    f.write("Табуляція вузлів:\n")
+    f.write(" № | Latitude   | Longitude  | Elevation (m)\n")
+    for i, pt in enumerate(results):
+        f.write(f"{i:2d} | {pt['latitude']:.6f} | {pt['longitude']:.6f} | {pt['elevation']:.2f}\n")
+    f.write("\nТабуляція (відстань, висота):\n")
+    f.write(" № | Distance (m) | Elevation (m)\n")
+    for i in range(n):
+        f.write(f"{i:2d} | {distances[i]:12.2f} | {elevations[i]:8.2f}\n")
+print("Табуляцію збережено: tabulation.txt")
 
 # 4. Метод прогонки
 
@@ -145,7 +156,7 @@ for n_pts in [10, 15, 20]:
 
 plt.figure(figsize=(10, 6))
 plt.plot(x_dense, y_full, label="21 вузол (еталон)", linewidth=2)
-for n_pts, col in [(10, "orange"), (15, "green"), (20, "red")]:
+for n_pts, col in [(10, "blue"), (15, "orange"), (20, "green")]:
     idx  = np.round(np.linspace(0, len(x_data) - 1, n_pts)).astype(int)
     xs, ys = x_data[idx], y_data[idx]
     as_, bs, cs, ds = build_cubic_spline(xs, ys)
